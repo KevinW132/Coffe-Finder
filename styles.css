@@ -1,0 +1,25 @@
+body {
+    margin: 0;
+    display: flex;
+    height: 100dvh;
+    font-family: Arial, sans-serif;
+}
+#sidebar {
+    width: 300px;
+    overflow-y: auto;
+    border-right: 1px solid #ccc;
+    padding: 10px;
+    background: #f9f9f9;
+}
+#map {
+    flex: 1;
+}
+.cafe-item {
+    margin-bottom: 10px;
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+}
+.cafe-item strong {
+    display: block;
+    color: #333;
+}
