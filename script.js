@@ -2,6 +2,8 @@
 
 const defaultLocation = [14.6349, -90.5069];
 const map = L.map("map").setView(defaultLocation, 15);
+const sidebar = document.getElementById("sidebar");
+const toggleBtn = document.getElementById("togle-btn");
 
 // Agregar los Titulos al mapa
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -65,10 +67,21 @@ function FindCoffes(lat, lon) {
                         );
                     coffeMaker.push(maker);
 
-                    listCoffes += `<div class="cafe-item"><strong>${nombre}</strong><br>A ${dist} km de distancia</div>`;
+                    listCoffes += `<div class="cafe-item" data-index="${
+                        coffeMaker.length - 1
+                    }"><strong>${nombre}</strong><br>A ${dist} km de distancia</div>`;
                 }
             });
             coffeList.innerHTML = listCoffes;
+
+            document.querySelectorAll(".cafe-item").forEach((item, index) => {
+                item.addEventListener("click", (e) => {
+                    const idx = e.currentTarget.getAtrribute("data-index");
+                    const cafe = coffeMaker[idx];
+                    map.setView([cafe.lat, cafe.lon], 18);
+                    cafe.marker.openPopup();
+                });
+            });
         })
         .catch((err) => console.error("overpass API error:", err));
     coffeList.innerHTML = "Error loading cafes.";
@@ -125,4 +138,14 @@ map.on("click", function (e) {
 
     // Search cafes again
     FindCoffes(lat, lon);
+});
+
+toggleBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("collapsed");
+    toggleBtn.innerHTML = sidebar.classList.contains("collapsed")
+        ? "⮞ Show"
+        : "⮜ Hide";
+    setTimeout(() => {
+        map.invalidateSize();
+    }, 310);
 });

@@ -11,13 +11,37 @@ body {
     padding: 10px;
     background: #f9f9f9;
 }
+#sidebar.collapsed {
+    width: 0;
+    padding: 0;
+    border: none;
+}
+#togle-btn {
+    position: absolute;
+    top: 10px;
+    left: 310px;
+    background: #333;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    z-index: 1100;
+    border-radius: 4px;
+}
+#sidebar.collapsed + #togle-btn {
+    left: 10px;
+}
 #map {
     flex: 1;
+    transition: all 0.3s ease;
 }
 .cafe-item {
     margin-bottom: 10px;
     padding: 5px;
     border-bottom: 1px solid #ddd;
+}
+.cafe-item:hover {
+    background: #eee;
 }
 .cafe-item strong {
     display: block;
