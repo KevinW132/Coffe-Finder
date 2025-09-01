@@ -63,7 +63,7 @@ function FindCoffes(lat, lon) {
                     const maker = L.marker([cafe.lat, cafe.lon])
                         .addTo(map)
                         .bindPopup(
-                            `<b>${nombre}</b><br>A ${dist} km de distancia`
+                            `<b>${nombre}</b><br>A ${dist} km de distancia<br><a href="https://www.google.com/maps?q=${cafe.lat},${cafe.lon}" target="_blank">Ver en Google Maps</a>`
                         );
                     coffeMaker.push(maker);
 
@@ -76,10 +76,15 @@ function FindCoffes(lat, lon) {
 
             document.querySelectorAll(".cafe-item").forEach((item, index) => {
                 item.addEventListener("click", (e) => {
-                    const idx = e.currentTarget.getAtrribute("data-index");
-                    const cafe = coffeMaker[idx];
-                    map.setView([cafe.lat, cafe.lon], 18);
-                    cafe.marker.openPopup();
+                    const idx = e.currentTarget.getAttribute("data-index");
+                    map.setView(
+                        [
+                            coffeMaker[idx]._latlng.lat,
+                            coffeMaker[idx]._latlng.lng,
+                        ],
+                        18
+                    );
+                    coffeMaker[idx].openPopup();
                 });
             });
         })
